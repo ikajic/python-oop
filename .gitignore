@@ -1,5 +1,6 @@
 # all backups
 *~
 
-# gimp
+# gimp and graphics
+*.jpg
 *.xcf
