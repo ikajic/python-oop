@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Python in Science</title>
+	<title>OOP in Python</title>
 
 	<meta name="description" content="Slides for the talk on Python in science for PyLadies Berlin">
 	<meta name="author" content="Ivana Kajic">
@@ -39,456 +39,216 @@
 <section data-markdown data-separator="^\n---\n$">
 <script type="text/template">
 
-# Python in Science 
-Or how can Python help us understand the human brain? 
+## An introduction to Object-Oriented Programming with Python
 
 <img src="img/lab-flask.png" width="20%">
 
-<small> PyLadies Berlin, November 2013 </small>
+<small> PyLadies Berlin, April 2014 </small>
 
-<small> [Ivana Kajic](mailto:ivana.kajic@gmail.com) Student@TU Berlin | [@kajic_ivana](http://twitter.com/kajic_ivana) </small>
-
----
-
-<img src="img/pybrain.png" />
+<small> [Ivana Kajic](mailto:ivana.kajic@gmail.com) | Student @ TU Berlin | [@kajic_ivana](http://twitter.com/kajic_ivana) </small>
 
 ---
 
-<section class="image-slide" data-background="img/brain.jpg">
+## What are we going to do today?
 
-## The human brain
+* Remind us of some Python basics: variables and functions 
 
-* Is only 2% of the weight of the body, but consumes approx. 25% of energy
+* Give a motivation and an intuitive definition of object-orientation 
 
-* Contains 100,000,000,000 neurons which are connected with 60,000,000,000,000 synapses. There are more synapses in the brain than stars in the Milky way!
+* Familiarize ourselves with the OOP terminology and see several examples of OOP concepts in Python 
 
-* Grey brain matter (*neocortex*) is doing "the" job and white brain matter is for communication between neurons
-
-* Unrolling the neocortex would give us around four A4 sheets
+* Get some work done in the hands-on session 
 
 ---
 
-<img src="http://upload.wikimedia.org/wikipedia/commons/3/30/Chemical_synapse_schema_cropped.jpg">
+## Some information before we start
+
+* The slides are available [online](http://ikajic.github.io/python-oop/) : ikajic.github.io/python-oop/
+
+* They contain links to tutorials, articles and other useful material I'll mention throughout the talk
+
+* Code examples I'll be showing are copy-pasted from the Python interpreter
 
 ---
 
-## Can you actually explain how the whole brain works?
+## Python Interpreter
 
-* Maybe, but it is very hard. We split the problem of understanding the brain into smaller ones and divide them to various researchers:
+* A program that executes commands written in Python
 
-    * How does learning work?
-    * How is information encoded in the brain?
-    * How does human vision work?
-    * How do we know that we are happy and not sad?
+<img src="img/pythoninterpreter.png" width="80%"/>
 
 ---
 
-## Neuroscience
+## Reminder: variables
 
-* Studies central nervous system (brain + spinal cord)
+* Variables are containers that store different types of data
 
-* Many different subdisciplines that investigate different aspects of human brain
-    
-    * Neurophysiology, neuroanatomy, clinical neuroscience, neurolinguistics, neuroeconomics and computational neuroscience...
+* Their values can be modified (thus the name), manipulated, displayed on the screen...
 
-* Computational neuroscience is a young discipline that uses math, computer science, physics and psychology to explain mechanisms in the human brain
+* Let's inspect some of the simple data types in Python
 
----
-
-### Mind reading
-
-Work in progress in neurosciences: Is it possible to see what someone is thinking? 
-
-<img src="img/gallant.png" width="60%"/>
-<small> Image and research by [Jack Gallant's Lab](http://gallantlab.org/index.html) at the UC Berkeley</small>
-
----
-
-## Mind reading: get your data!
-
-* Brain recording using fMRI scanners
-
-<div style="float:left;"> 
-    <img src="http://upload.wikimedia.org/wikipedia/commons/b/bd/Modern_3T_MRI.JPG" width="45%" /> 
-    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Fmrtuebersicht.jpg/538px-Fmrtuebersicht.jpg" width="40%"/> 
-</div> 
-
+```python
+>>> x=8
+>>> type(x)
+<type 'int'>
+>>> x+221
+229
+>>> s="Snake!"
+>>> type(s)
+<type 'str'>
+>>> ages=[18, 43, 21, 66]
+>>> type(ages)
+<type 'list'>
+>>> id = {'name': 'Heidi', 'age': 5, 'hair-color': 'brown'}
+>>> type(id)
+<type 'dict'>
+```
 
 ---
 
-### Mind reading: make sense out of data
+## Reminder: variables
 
-* Make computational models and use them to make predictions
+* The data types we have seen in the previous example are called [built-in Types](https://docs.python.org/2/library/stdtypes.html) and there are many of them
 
-* This is where computational neuroscience kicks in
-
-* Use of machine learning and data mining algorithms, simulations
-
-<div style="float:left;">
-	<img src="img/mr_model.png">
-	<img src="img/code.png" width="40%">
-</div>	
-
----
-
-
-### So where did we need Python in the mind reading example?               
-
-* Process the data: e.g. remove noise caused by subject movements in the scanner
-
-* Store and organize the data in some sensible way
-
-* Extract patterns from data and build computational models
-
-* Make pretty plots of our results: helps to understand what is happening and useful for communication among scientists
+* Some of the Built-in Types are: 
+	* `int` - integers (e.g. 2, -10)
+	* `float` - floating point numbers (-1.2, 1.)
+	* `bool` - boolean values (eiter `True` or `False`)
+	* `str` -  strings, a sequence of characters (e.g. "Monday", "123")
+	* `list` - list as a collection of values (e.g. [1, 2, 3], ["Hey", "there", 22])
+	* `dict` - dictionary, mapping between labels and values
 
 ---
 
-
-## Why did we choose Python?*                  
-
-* It’s free and easy to use: already there on most *nix systems. Just run `python` in a terminal
-
-* Great support: abundance of well maintained packages, especially tools needed in science
-
-* Readable and clear code: hides low level implementation details while following common coding conventions
-
-* Interactive: introspection of your code on the fly	
-
-<small> * MATLAB, R and some other programming languages are also used</small>
-
----
-
-## Where Python meets Science
-
-<img src="img/scipy.png">
-
-* [SciPy](http://www.scipy.org/) Stack is open-source bundle of Python packages for mathematics, science, and engineering
-
-* Some of the included packages in the SciPy stack: NumPy, SciPy library, Matplotlib, IPython, Pandas...
-
-* There are two options to get these packages
-    * Download each package separately ([instructions](https://github.com/ikajic/pyscience/blob/master/README.md))
-    * Get the whole set as a single installation file: [Anaconda](http://continuum.io/downloads) or [Canopy](https://www.enthought.com/products/canopy/)
-
-
----
-
-## Step 0: IPython
-
-* [IPython](http://ipython.org/) is a simple yet powerful interactive environment to write Python code
-
-* It's similar to the standard Python interpreter, but provides more functionality which makes coding easier and more efficient
-
-* For example: auto-completion using `tab`, save values and restore them later, the history of commands, timing of functions
-
-* IPython [Notebook](http://ipython.org/notebook.html) is a web-based interactive environment to write and execute code, write text and mathematical formulas, include plots...
-
----
-
-### IPython
-
-<img src="img/ipython.png" />
-
----
-
-### IPython notebook (web-browser)
-
-<img src="http://ipython.org/ipython-doc/rel-1.0.0/_images/ipy_013_notebook_spectrogram.png" width="80%"/>
-
----
-
-## Dealing with numbers: NumPy
-
-* [NumPy](http://www.numpy.org/) is a powerful Python package for efficient manipulation with numbers 
-
-* Numbers are "the data": measurements from experiments, results of computer simulations, etc.
-
-* Numbers are stored in containers called `arrays` 
-
-* For MATLAB users planning to switch to Python there is a [cheat sheet](http://wiki.scipy.org/NumPy_for_Matlab_Users)
+## Reminder: functions
  
+* Functions are operations on variables 
 
----
+* For example: addition (+) is a mathematical operation that can be expressed as a function: ``f(a,b) = a + b``
+	* `f` is the name of the function
+	* `a` and `b` are the arguments this function is using
 
-### NumPy Array
+* We can define the function `f` in Python:
+```python
+>>> def f(a,b):
+...     # variable res stores the result of addition
+...     res=a+b
+...     return res
+... 
+```
 
-* Basic data structure used to store numbers
-
-* Vectors are one-dimensional arrays, matrices are two-dimensional, but we can also have N-dimensional arrays
-
-    * Vector containing four numbers: `[1, 2, 3, 4]`
-    * Matrix containing six numbers in two rows and three columns: 
-        
-        `[[1, 2, 3],`
-        
-        ` [4, 5, 6]]`
-
-
-* Indexing starts with `0` (not `1`), so the first element in a vector is at the `0`-th position
-
-
----
-
-``` python
->>> import numpy as np
-
-# Create an array with numbers from 0 to 15
->>> a = np.arange(0, 15)
->>> a
-array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14])
-
-# What is the first element in the array? 
->>> a[0]
-0
-
-# What is the shape of our array?
->>> a.shape
-(15,)
-
-# Make a new array, this time with rows and columns
->>> b = a.reshape(3,5)
->>> b
-array([[ 0,  1,  2,  3,  4],
-       [ 5,  6,  7,  8,  9],
-       [10, 11, 12, 13, 14]])
->>> b.shape
-(3, 5)
-
-# Get all the numbers in the second row 
->>> b[1, :]
-array([5, 6, 7, 8, 9])
-
->>> type(b)
-<type 'numpy.ndarray'>
+* And use it:
+```python
+>>> a = 3
+>>> b = 4
+>>> f(a,b)
+7
 ```
 
 ---
 
-<img src="img/matplotlib.png" />
-    
-* [Matplotlib](http://matplotlib.org/) is a Python package for data plotting
+## Spicing it up... 
 
-* Supports different plotting options: histograms, power spectra, bar charts, errorcharts, scatterplots... with just a few lines of code
-
-* Ok, let's plot in Python!
-
----
-
-
-### Study: How does the amount of chocolate influence happiness?
-
-<img src="img/simple_plot.png" width="50%"/> 
-
----
-
-### Plotting code
+* Imagine having a `functions.py` script that contains a bunch of  different functions (here we listed only function definitions):
 
 ```python
->>> import matplotlib.pylab as pl
->>> import numpy as np
+...
+def add_floats(a, b)
+def print_float(a)
+def clear_float(a)
+def add_ints(a,b)
+def print_int(a)
+def clear_int(a)
+def add_strings(a,b)
+def print_string(a)
+def clear_string(a)
+...
+```
 
-# Load data on a drive into two NumPy arrays
->>> chocolate = np.load('chocolate.npy')
->>> happy = np.load('happiness.npy')
-
-# Plot array chocolate vs array happy
->>> pl.plot(choc, happy)
-
-# Label horizontal axis (x) and vertical axis (y)
->>> pl.xlabel('Chocolate (gram)')
->>> pl.ylabel('Happiness (smiling)')
-
-# Give a title to our plot
->>> pl.title('Influence of chocolate on happiness')
-
->>> pl.grid(True)
->>> pl.savefig("chocolate.png")
->>> pl.show()
-```       
-
----
-
-
-### With matplotlib you can do this
-
-<img src="img/heart.png" />
-<img src="img/histogram.png" />
-
----
-
-### ... and this! 
-
-<img src="img/hist2d_demo.png" />
-<img src="img/polys3d_demo.png" />
-
-* And much more! These examples are taken from the gallery at the [matplotlib page](http://matplotlib.org/gallery.html#) which contains many beautiful plots and the source code used to generate them
-
----
-
-## NLTK
-
-* [Natural language toolkit](http://nltk.org/) suitable for linguists, engineers, students, educators, researchers, and industry users alike 
-
-* Suite of text processing libraries for classification, tokenization, stemming, tagging and parsing
-
-* Example applications: RSS Feeds, extracting text from PDF, Word documents, Tweets ...                   
-
----
-
-## More on NLTK
-
-* Fundamentals of writing Python programs, working with corpora, categorizing text, analyzing linguistic structure...
-
-* Available [online](http://nltk.org/book/) for free:                   
-
-<img src="http://covers.oreilly.com/images/9780596516499/cat.gif" width="300" height="400">
-
----
-
-## A peek into the NLTK
-
+* If you wanted use any of these functions in some other script, you would [import](http://effbot.org/zone/import-confusion.htm) the function using a following command:
 ```python
->>> import nltk
->>> sentence = "Good evening! Would you like some tea?"
->>> tokens = nltk.word_tokenize(sentence)
->>> tokens
-['Good', 'evening', '!', 'Would', 'you', 'like', 'some', 'tea', '?']
->>> tagged = nltk.pos_tag(tokens)
->>> tagged
-[('Good', 'NNP'), ('evening', 'NN'), ('!', '.'), 
-('Would', 'MD'), ('you', 'PRP'), ('like', 'VB'), 
-('some', 'DT'), ('tea', 'NN'), ('?', '.')]
-
-# NNP and NN is abbreviation for a noun, VB for a verb and PRP for a personal pronoun
+from functions import add_floats
 ```
 
 ---
 
-### Reading Jane Austen's Emma with NLTK *
+## Analyzing `functions.py`
 
+* Some pieces of code are redundant  
+	 * `add_floats` and `add_ints` might contain the same code for addition
+	 * `print_string` and `print_int` could also be similar
+	 
+* For a new data type we might feel tempted to copy-paste existing functions and just replace names (bad idea!)
 
-* NLTK also includes short excerpts from some books provided by the Project Gutenberg
-
+* We must know and explicitly list all function names we want to import 
 ```python
->>> import nltk
->>> nltk.corpus.gutenberg.fileids()
-['austen-emma.txt', 'austen-persuasion.txt', 'austen-sense.txt', 
-'bible-kjv.txt', 'blake-poems.txt', 'bryant-stories.txt', 
-'burgess-busterbrown.txt', ..., 
-'shakespeare-hamlet.txt', 'shakespeare-macbeth.txt', 'whitman-leaves.txt']
-
->>> emma = nltk.corpus.gutenberg.words('austen-emma.txt')
->>> emma[10:20]
-['I', 'Emma', 'Woodhouse', ',', 'handsome', ',', 'clever', ',', 'and', 'rich']
-
->>> print "Number of words:", len(emma)
-Number of words: 192427
-```
-<small>\* But I'd rather recommend a cup of tea and a blanket istead of Python for book reading </small>
-
----
-
-## <img src="img/scikit.png" width="40%">
-
-* [Scikit-learn](http://scikit-learn.org/stable/index.html): satisifes all the data mining and data analysis needs 
-
-* Abundance of algorithms for supervised and unsupervised learning 
-
-* Classification, regression, clustering, model selection, dimensionality reduction and data preprocessing
-
----
-
-<section class="image-slide" data-background="img/scikit_classifiers_.png">
-
----
-
-
-
-## <img src="img/mdp_logo_animation.gif" width="40%">
-
-* [MDP](http://mdp-toolkit.sourceforge.net/) is a modular toolkit for data processing
-
-* Set of algorithms for data mining, classification, signal processing, pattern recognition...
-
-* In MDP every algorithm is referred to as a `node` which can be modified by a user
-
-* Built on NumPy and SciPy
-
----
-
-## MDP: Detection of objects
-
-* Imagine having 2D geometrical objects such as filled or emtpy circles and rectangles which are made of random points, for example:
-<center> <img src="img/mdp_randomdata.png"> </center>
-
-* Our goal is to find out how many objects there are in this image
-
-
----
-
-## MDP: Detection of objects
-
-* There are many ways to solve this problem, but we love neurons and will use a special type of a neural network called [growing neural gas (GNG)](http://en.wikipedia.org/wiki/Neural_gas) to solve it
-
-* GNG spreads a sheet of neurons over the data and tries to position neurons so they maximally cover clusters of data
-
-* At every time step, the number of neurons in network increase until some final condition is met
-
----
-
-### Neural network in the beginning...
-
-
-<center> <img src="img/mdp_initial.png" width="80%"> </center>
-
----
-
-### ... and after the learning!
-
-
-<center><img src="img/mdp_trained.png" width="80%" /> </center>
-
-
----
-
-### Code that does what we have just seen:
-
-```python
-import mdp
-
-x = generate_random_circles_and_rectangles()
-
-gng = mdp.nodes.GrowingNeuralGasNode(max_nodes=75)
-
-STEP = 500
-for i in range(0, x.shape[0], STEP):
-    gng.train(x[i:i+STEP])
-gng.stop_training()
-
-n_obj = len(gng.graph.connected_components())
-print n_obj
+from functions import add_floats, print_float, clear_float, add_ints, print_int, clear_int
 ```
 
-```
-Output: 5
-```
+---
 
-<ul><small> \* Complete source code is available [here](http://mdp-toolkit.sourceforge.net/code/examples/gng/gng.html) </small></ul>
+## Is there alternative to organizing the code?
+
+* Yes, we could use object-oriented programming
+
+* Create **class** as a blue print and **objects** that are examples of that class
 
 ---
 
-## Python as a glue
+## Why OOP?
 
-* Python can be used to wrap libraries in other programming languages such as C, C++ , Java or Fortran (which are also used in science)
+* Having many functions and variables can get very messy!	
 
-* This is useful when you need to speed up the execution of Python code or the libraries you need don't exist in Python
+* Object-oriented approach is a way to organize and structure your code 
 
-* [Cython](http://cython.org/): Wrap external C libraries
+* It helps to group pieces of code that logically fit together
 
-* [f2Py](http://cython.org/): Fortran to Python
+* Understanding how OOP works helps understanding Python internals, as well as some of libraries you might have used (Django, Flask, SciPy)
 
-* [swig](http://www.swig.org/): Turning C code into a Python module
+---
+
+## Library example
+
+---
+
+## Python class example
+
+* show an image here
+
+---
+
+## Class variables, methods and attributes
+
+* somestuff
+
+---
+
+## Constructor
+
+---
+
+## Life of a class
+
+* Starts with the `__init__` method that has a special name - constructor
+
+	* When you instantiate a class, Python first executes the code in the constructor
+	* It is useful for setting default values of class members
+
+
+
+* Ends with the deletion of the object when it's no more needed
+	* Python does this automatically in a process called [Garbage collection](http://www.digi.com/wiki/developer/index.php/Python_Garbage_Collection)
+	* If you want to remove the object by hand use the `del` command
+
+---
+
+## A bit more on OOP
+
+* Self
+
+* Super
+
+* Encapsulation
 
 ---
 
