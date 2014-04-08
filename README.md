@@ -2,20 +2,20 @@ Object orientation in Python
 ===
 
 In this tutorial we are going to play around with classes and objects in Python.
-We will create a class with several methods and attributes, analyze it carefully and see important differences between class attributes and instance attributes. 
-To write Python commands we will use the plain Python Interpreter.
+We will create a class with several methods and attributes, analyze it carefully and use it to create a couple of objects. We will also see a simple example of inheritance.
+To write Python commands we will use the plain Python interpreter.
 
 
 Getting started
 ---
-In this tutorial will use Python 2.7, although if you have any other version it is also fine. The Python Interpreter we will be using comes with the installer. If you don't have Python on your machine follow the steps below, otherwise you can skip this section.
-More experienced users might also want to work with [IPython](http://ipython.org/install.html), an interactive console, which offers additional functionality such as tab completion, inspection of the namespace, inline help and much more. 
+In this tutorial will use Python 2.7, but if you have any other version it is also fine. The Python interpreter we will be using comes with the installer. If you already have Python on your machine you can skip the instructions below.
+More experienced users might also want to work with [IPython](http://ipython.org/install.html), an interactive console which offers additional functionality such as tab completion, inspection of the namespace, inline help and much more. 
 
 
-For **Windows** users the most convenient way to get Python is to download installers from the official [Python website](https://www.python.org/download/). Depending on your operating system type, you will need either a 32-bit or 64-bit version of the installer.
-If you're unsure which version to download, you can find the information by right clicking on `My Computer` and `Properties` in Windows. If you have a 32-bit processor get the `Python 2.7.6 Windows Installer` and if it's 64-bit the `Python 2.7.6 Windows X86-64 Installer`.
+For **Windows** users the most convenient way to get Python is to download the installer from the official [Python website](https://www.python.org/download/). Depending on your operating system type, you will need either a 32-bit or 64-bit version of the installer.
+If you're unsure which version to download, you can find the information by right clicking on `My Computer` and `Properties` in Windows. If you have a 32-bit processor get the `Python 2.7.6 Windows Installer` and if it's 64-bit you need the `Python 2.7.6 Windows X86-64 Installer`.
 
-**Mac** and **Linux** users should have Python already installed by default. 
+**Mac** and **Linux** users should already have Python on their systems, since it comes with the operating system. 
 Experienced users might wish to check out which version of Python they have by starting a Terminal and typing in: 
 ```python --version```
 If you want to update or install a newer Python version (recommended only for users with Python 2.5) on a Linux system just start a Terminal and type:
@@ -43,24 +43,22 @@ class Book(object):
 ```
 
 Well, we see that we have two methods: `__init__` which is a constructor and a `print_info` method.
-They both take just one argument, namely the `self` which says that these two methods belong to exactly that class.
+They both take just one argument, namely the `self` which is used to address attributes and methods.
 In the constructor we define two attributes: `title` and `author`, and set them to some predefined values.
-In the method `print_info` we print these values. Huh? That looks rather boring, let's actually use this class.
+In the method `print_info` we print these values. Huh? This doesn't appear to be particularly exciting, let's actually use this class. First, we create an object, namely an instance of a class `Book`:
 
 ```python
-# First, we create one instance of a class Book
 book1 = Book()
 ```
 
-We can access class members, let's see what happens when you type:
+Now we can access class members, let's see what happens when you type:
 ```python
 book1.title
 book1.author
 book1.print_info()
 ```
-Nothing unexpected, right? 
-We see that the class is holding a state of an object, defined through its attributes `title` and `author`.
-Now, let's create another instance of a class `Book` and print info about it:
+Nothing unexpected, right? We see that the class is holding a state of an object, defined through its attributes `title` and `author`.
+Now, let's create another instance of the class `Book` and print some information about it:
 ```python
 book2 = Book()
 book2.print_info()
@@ -81,20 +79,40 @@ book2.print_info()
 ```
 
 If your answer was "Nothing changed", you were right! 
-This is because `book1` and `book2` are just instances of a class, and instance attributes are not shared among each other.
+This is because `book1` and `book2` are just instances of a class, and instance attributes are not shared among each other. If we want to take a peek into the class members, we can use the function `dir`:
+```python
+dir(book1)
+```
+The output should be following:
+```
+['__class__', '__delattr__', '__dict__', '__doc__', '__format__', '__getattribute__', '__hash__', '__init__', '__module__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'author', 'print_info', 'title']
+```
+At the end of the output we see the class members we defined - attributes `author` and `title`, and the `print_info` method. Other strange looking class members is something Python adds by defult, but we won't use them in this exercise. 
+
+Now, let's make a slightly different class than the one before, and create a corresponding object:
+```python
+class Book(object):
+	def __init__(self):
+		title = "1984"
+		author = "George Orwell"
+	
+	def print_info(self):
+		print "The book", title, "is written by", author
+
+book = Book()
+```
+What happens if you try to access variables `title` and `author?` 
+
+You should get a warning saying that `Book` has no attribute 'title'. This might be a bit confusing, as we defined these two variables in the `__init__` method. But, since we didn't make them attributes (notice the `self` is missing), Python treats them as local variables which exist only in the scope of the function and get destroyed after the function is executed. Check out that these attributes don't exist using the `dir` command.
 
 Customizing a class
 ---
-In the previous example, we set default values for a book and changed them by hand later.
-We can also save us some work and pass the book title and the author name upon the creation of an instance.
+In the previous example, we set attribute values in the constructor and changed them later by hand.
+We can also save us some work and pass the book title and the author name as arguments to the constructor.
 To do so, we extend the list of arguments in the constructor. 
-In addition, we added a new attribute, a list called `borrowed_to` which helps us keep the track of persons whom we borrowed our book to. 
-For track keeping we create a new method, that takes the name as an argument and appends it to the list.
 
 ```python
 class Book(object):
-	
-	borrowed_by = []
 	
 	def __init__(self, title, author):
 		self.title = title
@@ -103,8 +121,6 @@ class Book(object):
 	def print_info(self):
 		print "The book", self.title, "is written by", self.author
 		
-	def borrows(self, name):
-		self.borrowed_by.append(name)
 ```
 
 Now, we create an instance in a following way:
@@ -113,85 +129,59 @@ book1 = Book("Oscar Wilde", "The Picture of Dorian Gray")
 book1.print_info()
 ```
 
-Oh crap, we switched the title and the author! Do you have any idea how to repair that? 
+Oh crap, we switched the title and the author! Do you have any idea how to fix that? 
 In case you forget the order of your arguments, you can always use the following syntax:
 ```python
 book1 = Book(author="Oscar Wilde", title="The Picture of Dorian Gray")
 book1.print_info()
 ```
-This looks much better! Now, let's expand our library by another book:
+
+## Inheritance 
+In this exercise, we're going to explore some of the advantages of using inheritance, an important aspect of object-oriented programming. Remember, inheritance means we define a class and inherit its members in another class. The class we're inheriting from is called a base class, and the class which inherits is the derived class.
+Let's start with a class which is very similar to the `Book` class from before:
 ```python
-book2 = Book(author="Oscar Wilde", title="The Importance of Being Earnest")
+class Book(object):
+	
+	def __init__(self, title, author, nr_pages):
+		self.title = title
+		self.author = author
+		self.nr_pages = nr_pages
+		
+	def print_info(self):
+		print "The book", self.title, "is written by", self.author, "and contains", self.nr_pages, "pages"
+		
+	def repair_costs(self):
+		return self.nr_pages * 2
+
+```
+Now, let's create another class `SpecialBook` which inherits from the class `Book`:
+```python
+class SpecialBook(Book):
+	pass
+```
+Now, `pass` is used to denote that we don't do anything new in the class, we just inherit all the members from the class Book. We are not adding or changing any behaviour of our new class. Basically, `SpecialBook` and `Book` are two different classes that behave in the same way.
+You can convice yourself by creating two instances and comparing them:
+```python
+book1 = Book("Mrs Dalloway", "Virgina Woolf", 100)
+book2 = SpecialBook("Emma", "Jane Austen", 100)
+book2.print_info()
+book2.repair_costs()
+```
+As you can see, even if we didn't define any of the methods in the `SpecialBook` class, they are there because we inherited them from the parent class. Now, this is nice, but let's see a more practical example. 
+Let's say that all special books are more expensive to repair, we can define a method in `SpecialBook` and keep other attributes same as before:
+```python
+class SpecialBook(Book):
+	def repair_costs(self):
+		return self.nr_pages * 5
 ```
 
-Suppose you want to lend the first book to Ann, and the second book to Joe:
+Let's see what changes now:
 ```python
-book1.borrows("Ann")
-book2.borrows("Joe")
+book1 = Book("Mrs Dalloway", "Virgina Woolf", 100)
+book2 = SpecialBook("Emma", "Jane Austen", 100)
+book2.print_info()
+book2.repair_costs()
 ```
-Ok, then we forget whom we gave our books, so we want to remind ourselves:
-```python
-book1.borrowed_by
-book2.borrowed_by
-```
-Wait, the list says that both books have been with Ann and Joe, which is not true.
-What happened here? By defining a list `borrowed_by` out of the scope of any method, 
-we declared it as class attribute which is shared among all instances. 
-Thus, when one instance appends the value, this is executed in all instances.
 
+We see that the special book has much higher cost now, and this is because we used an OOP feature called overriding. Overriding means we changed the method inherited from a parent class, but kept its name.
 
-Mind-teasers
-----
-1. Suppose you made a very common typo and wrote a class like this:
-  ```python
-  class Book(object):
-  	
-  	borrowed_by = []
-  	
-  	def __init__(self, title, author):
-  		self.title = title
-  		self.author = author
-  		
-  	def print_info():
-  		print "The book", self.title, "is written by", self.author
-  		
-  	def borrows(self, name):
-  		self.borrowed_by.append(name)
-  ```
-  
-  Now, Python assumes you know what you're doing and doesn't complain. But then when you wanted to print the information about the book, you get a following message:
-  
-  ```python
-  >>> book1.print_info()
-  Traceback (most recent call last):
-    File "<stdin>", line 1, in <module>
-  TypeError: print_info() takes no arguments (1 given)
-  ```
-  Can you guess what is that mysterious argument that has been given to a function?
-
-2. If instead of `borrowed_by` we had kept track of a number of times we read a book, like this:
-  ```python
-  class Book(object):
-  	
-  	times_read = 0
-  	
-  	def __init__(self, title, author):
-  		self.title = title
-  		self.author = author
-  		
-  	def print_info():
-  		print "The book", self.title, "is written by", self.author
-  		
-  	def read(self, name):
-  		self.times_read = self.times_read + 1
-  
-  book1 = Book(author="Oscar Wilde", title="The Picture of Dorian Gray")
-  book2 = Book(author="Oscar Wilde", title="The Importance of Being Earnest")
-  
-  book1.read()
-  book2.read()
-  book1.read()
-  ```
-  
-  What would you expect `book1.times_read` and `book2.times_read` to be? Check your answer by trying it out. 
-  For a detailed explanation, check [this](http://stackoverflow.com/questions/2923579/python-class-attribute) answer on Stack Overflow.
