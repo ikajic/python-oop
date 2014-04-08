@@ -63,7 +63,7 @@
 
 ## Some information before we start
 
-* The slides are available [online](http://ikajic.github.io/python-oop/) : ikajic.github.io/python-oop/
+* The slides are available [online](http://ikajic.github.io/python-oop/): ikajic.github.io/python-oop/
 
 * They contain links to tutorials, explanations and other useful material I'll mention throughout the talk
 
@@ -358,50 +358,47 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 ## Advanced OOP: Inheritance
 
-* [Inheritance](https://docs.python.org/2/tutorial/classes.html#inheritance) is used to derive from an existing class which is called a parent or base class:
+* [Inheritance](https://docs.python.org/2/tutorial/classes.html#inheritance) is used to derive from an existing class which is called a parent or a base class:
 
     ```python
-    >>> class Fruit: # define parent class
-    ...     def __init__(self):
-    ...         print "Hi there! I'm a fruit and I'm growing"            
-    ...     def eat(self):
-    ...         print "I love eating fruit!"
+    >>> class Book(object):
+    ...     def __init__(self, title, author, pages):
+    ...         self.title = title 
+    ...         self.author = author 
+    ...         self.pages = pages
+    ...                 
+    ...     def repairCosts(self):
+    ...         return self.pages * 2
     ... 
-    >>> class Pineapple(Fruit): # define one child class
-    ...     def __init__(self):       
-    ...         print "I am a yummi pineapple!"  
-    ...
-    >>> p = Pineapple()
-    I am a yummi pineapple!
-    >>> p.eat()
-    I love eating fruit!
+    >>> class SpecialBook(Book):
+    ...     def repairCosts(self):
+    ...         return self.pages * 5
+    ... 
+    >>> standard_book = Book("Adventures of Tom Sawyer", "Mark Twain", 125)
+    >>> standard_book.repairCosts()
+    250
+    >>> special_book = SpecialBook("Encyclopedia Britannica", "Unknown", 125)
+    >>> special_book.repairCosts()
+    625
     ```
 
 ---
 
 ### Advanced OOP: Inheritance [cont'd]
     
-* We can also [override](http://en.wikipedia.org/wiki/Method_overriding) methods defined in a parent class
-    ```python
-    >>> class Fruit:        # define parent class
-    ...     def __init__(self):
-    ...         print "Hi there! I'm a fruit and I'm growing"            
-    ...     def eat(self):
-    ...         print "I love eating fruit!"
-    ...     
-    >>> class Banana(Fruit): # define another child class
-    ...     def eat(self):
-    ...         print "I like only bananas!"
-    ...
-    >>> b = Banana()
-    print "Hi there! I'm a fruit and I'm growing"
-    >>> b.eat()
-    I like only bananas!    
-    ```
+* In the previous example, we inherited methods and attributes of the parent class when defining a new class `SpecialBook`
+
+* In addition, we replaced the `repairCosts` method of the parent class with our own. This is called [overriding](http://en.wikipedia.org/wiki/Method_overriding) 
+
+---
+
+## Remarks on inheritance
+
 * Use the [`super`](http://learnpythonthehardway.org/book/ex44.html) keyword in the constructor to invoke the constructor of the parent class
     ```python
     super(Banana, self).__init__()   
     ```
+* When we define a class using: ``class ClassName(object):`` we actually inherit from the class `object`. This is part of the [new-style classes](http://python-history.blogspot.de/2010/06/new-style-classes.html)
 
 ---
 
@@ -412,16 +409,15 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 * By agreement, encapsulation is not completely supported in Python, but one can prefix the attribute with an underscore (e.g. `_price`) to denote that this attribute is not meant to be used outside of the class
 
     ```python
-    >>> class Banana(Fruit): # define another child class
-    ...     _price = 100
-    ...     def eat(self):
-    ...         print "I like only bananas!"
-    ...
-    ```
-* However, it is still possible to access the attribute:
-    ```python
-    >>> b = Banana()
-    >>> b._price
+    >>> class Book(object):
+    ...     def __init__(self, title, author, pages):
+    ...         self._price = 100
+    ...         self.title = title 
+    ...         self.author = author 
+    ...         self.pages = pages
+    ... 
+    >>> book = Book("Adventures of Tom Sawyer", "Mark Twain", 125)
+    >>> book._price
     100
     ```
 
@@ -489,14 +485,14 @@ Printing a string: ""
 
 * There are two tutorials, pick the one you like!
 
-* [non-OOP basic Python](http://learnpythonthehardway.org/book/): Variables, functions, files for beginners
-    * Recommended for programming/Python first timers
+* [basic Python](http://learnpythonthehardway.org/book/): Variables, functions, files for beginners
+    * Recommended for programming/Python first timers (no OOP here)
     * The tutorial guides you through the installation process (Exercise 0) and continues with simple exercises (Exercise 1 - Exercise 4)
     
-* [OOP](https://github.com/ikajic/python-oop/): First steps in OOPv
+* [OOP](https://github.com/ikajic/python-oop/): First steps in OOP
     * Recommended for all who already know some Python
     * There are several exercises of varying complexity, it starts with the simplest ones: creation of a class, inspection of class members and playing around with instances of that class
-    * Last few exercises are a bit more advanced (but fun!)
+    * There are a couple of mind-teasers for those of you who want to know more about objects
 
 
 </script>            
