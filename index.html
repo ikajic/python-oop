@@ -93,15 +93,9 @@
     <type 'int'>
     >>> x + 221
     229
-    >>> s = "Snake!"
-    >>> type(s)
-    <type 'str'>
     >>> ages = [18, 43, 21, 66]
     >>> type(ages)
     <type 'list'>
-    >>> id = {'name': 'Heidi', 'age': 5, 'hair-color': 'brown'}
-    >>> type(id)
-    <type 'dict'>
     ```
 
 ---
@@ -112,8 +106,6 @@
 
 * Some of the Built-in Types are: 
 	* `int` - integers (e.g. 2, -10)
-	* `float` - floating point numbers (-1.2, 1.)
-	* `bool` - boolean values (eiter `True` or `False`)
 	* `str` -  strings, a sequence of characters (e.g. "Monday", "123")
 	* `list` - list as a collection of values (e.g. [1, 2, 3], ["Hey", "there", 22])
 	* `dict` - dictionary, mapping between labels and values
@@ -125,20 +117,24 @@
 * Functions are operations on variables 
 
 * For example: addition (+) is a mathematical operation that can be expressed as a function: ``f(a,b) = a + b``
-	* `f` is the name of the function
-	* `a` and `b` are the arguments this function is using
+	* `f` is the name of the function, `a` and `b` are the arguments 
 
 * In Python, we can define the function `f` and use it:
     ```python
     >>> def f(a, b):
-    ...     # variable res stores the result of addition
-    ...     res = a+b
+    ...     # variable res stores the result
+    ...     res = 0
+    ...     if a > b:
+    ...         res = a - b
+    ...     else:
+    ...         res = b - a
     ...     return res
     ... 
     >>> a = 3
     >>> b = 4
-    >>> f(a, b)
-    7
+    >>> f(a,b)
+    1
+
     ```
 
 ---
@@ -229,15 +225,15 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 * Borrow: **who** borrowed the book, **when** and for how **long**
 
-* Return: **who** returned the book, **when**, what was the **state** of the book upon giving it back
+* Return: **who** returned the book, **when**, what was the **condition** of the book upon giving it back
 
 * Repair: **what** is a damage, **where** is it located and **how** much does it cost?
 
-* You can also read a book, destroy it (spill coffee on it), etc... but those are not so relevant now :)
+* You can also read a book, destroy it (spill coffee on it), etc... 
 
 ---
 
-## Important things to know about the book example
+## Important things to keep in mind...
 
 * When describing what a book is with different attributes, we didn't describe a particular instance of book but the "idea" of a book
 
@@ -250,7 +246,7 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 ## First class
 
 ```python
->>> class Book: # <-- definition of a class
+>>> class Book(object): # <-- definition of a class
 ...     """This class describes the concept of a book.""" # <-- docstring
 ...     
 ...     evil = 0 # <-- class varible
@@ -276,9 +272,7 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 ## Classes and objects
 
 * Class is a description or a representation of an object, defined using the keyword `class`:
-        class Book:
-
-* By convention, the first letter of a class name is an uppercase
+        class Book(object):
 
 * Object is an instance of a class:
     ```python
@@ -289,85 +283,76 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
     ```
     * `favorite_book` and `boring_book` are objects
 
-* Every object has its own copies of class methods and attributes
+---
+
+## Class members
+
+* Class members are methods and attributes
+
+* Python uses `self` to refer to the class members and distinguish them from local variables
+
+```python
+...     def __init__(self, title, author, isbn): 
+...         self.title = title 
+...
+...     def borrow(self, name, date):
+...         self.name = name
+
+```
 
 ---
 
-## Class methods, constructor
+## Methods
 
-* All functions defined inside a class are called methods and must have the keyword `self` in the list of arguments
-        >>> def borrow(self, name, date):
-        
-* Methods define what we can do with a class
+* All functions defined inside a class are called methods and must have the argument `self` in the list of arguments
+        >>> def borrow(self, name, date): 
     
 * `__init__` is a special method called **constructor** 
-    * Every time an object is instantiated, Python calls the constructor of the class
-    * It is useful to set the default values of class attributes
+    * Every time an object is created, Python calls the constructor of the class
+    * It is useful to set the values of instance attributes upon the creation of the object
     
 * Methods are accessed using the dot notation
 ```python
-    >>> # Inside a class
-    >>> self.borrow() 
-    >>> # From an object
+    >>> favorite_book = Book("Pride and Prejudice", "Jane Austen", "123")
     >>> favorite_book.borrow()
 ```
 
 ---
 
-## Class attributes
+## Attributes
       
-* Class attributes are variables inside a class and are also accessed using the dot notation
+* Attributes (also called instance attributes) are variables inside a class and are also accessed using the dot notation
 ```python
-    >>> # Inside a class
-    >>> self.name
-    >>> self.state    
-    >>> # From an object
-    >>> obj.name
-    >>> obj.state
-```    
-        
+    >>> favorite_book.title
+    >>> favorite_book.author
+```            
 * We can add new attributes at any time:
         >>> favorite_book.times_read = 0
         >>> favorite_book.times_read = favorite_book.times_read+1
-        
-* And delete them:
-        >>> del favorite_book.times_read
 
----
+* Class attributes (also called class variables) are defined within a class, but outside of a method and they are rarely used in practice
 
-## Class variables
-                
-* Class variables are defined within a class, but outside of a method 
     ```python
-        >>> class Book: # <-- definition of a class
-        ...     """This class describes the concept of a book.""" # <-- docstring
-        ...     
-        ...     evil = 0 # <-- class varible
-        ...     def __init__(self, title, author, isbn): # <-- this is a method
+    >>> class Book(object):
+    ...     evil = 0 # <-- class varible
+    ...     def __init__(self, title, author, isbn): # <-- this is a method
     ```
-    
-* They can be very dangerous if not used properly 
-    * To see what that means, we will use them improperly in the hands on session      
 
 ---
 
 ## Remarks
 
-* Objects can also be deleted to free up memory
-	* Python does this automatically in a process called [Garbage collection](http://www.digi.com/wiki/developer/index.php/Python_Garbage_Collection) when it detects an object is not used anymore
-	* If you want to remove the object by hand:
-            del favorite_book
-
-* If you want to inspect elements of a class or an object, you can access its dictionary using the `__dict__` command:
+* If you want to inspect elements of a class or an object, you can use the `dir` command:
     ```python
-    >>> Book.__dict__
-    {'index': 0, '__module__': '__main__', 
-    '__doc__': 'This class describes the concept of a book.', 
-    '__init__': <function __init__ at 0x89b5dbc>, 
-    'borrow': <function borrow at 0x89b5d84>}
-    >>> fav.__dict__
-    {'author': 'Jane Austen', 'isbn': '123', 'title': 'Pride and Prejudice'}
+    >>> boring_book = Book("Washing machines of the 20th century", "Boring Guy", "456")    
+    >>> dir(boring_book)
+    ['__class__', '__delattr__', '__dict__', '__doc__', '__format__', 
+    '__getattribute__', '__hash__', '__init__', '__module__', '__new__', 
+    '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', 
+    '__str__', '__subclasshook__', '__weakref__', 
+    'author', 'borrow', 'evil', 'isbn', 'repair', 'state', 'title']
     ```
+* What other class members mean, especially those with underscores (`__`) is explained [here](http://www.rafekettler.com/magicmethods.html)
 
 ---
 
@@ -422,33 +407,23 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 ### Advanced OOP: Encapsulation
 
-* [Encapsulation](http://stackoverflow.com/questions/70528/why-are-pythons-private-methods-not-actually-private) or "data hiding" is used to hide some class members and make them invisible in objects
+* [Encapsulation](http://stackoverflow.com/questions/70528/why-are-pythons-private-methods-not-actually-private) is the concept in OOP for hiding some class members, so they cannot be used in objects
 
-* In Python, this is achieved* using underscores "`__`"
+* By agreement, encapsulation is not completely supported in Python, but one can prefix the attribute with an underscore (e.g. `_price`) to denote that this attribute is not meant to be used outside of the class
+
     ```python
-    >>> class JustCounter:
-    ...    __secretCount = 0
-    ...   
-    ...    def count(self):
-    ...       self.__secretCount += 1
-    ...       print self.__secretCount
-    ... 
-    >>> counter = JustCounter()
-    >>> counter.count()
-    1
-    >>> counter.count()
-    2
+    >>> class Banana(Fruit): # define another child class
+    ...     _price = 100
+    ...     def eat(self):
+    ...         print "I like only bananas!"
+    ...
     ```
-
-* When we try to access the `__secretCount` variable:
+* However, it is still possible to access the attribute:
     ```python
-    >>> print counter.__secretCount
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-    AttributeError: JustCounter instance has no attribute '__secretCount'
+    >>> b = Banana()
+    >>> b._price
+    100
     ```
-
-<small> * Actually, it is possible to access hidden members, we'll do it later! </smaller>
 
 ---
 
