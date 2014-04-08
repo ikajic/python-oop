@@ -243,6 +243,19 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 ---
 
+## OOP: An intuitive definition
+
+* "The idea" of a book is a class
+
+* Any particular book example you can think of is an instance of that class (also called an object)
+
+* The values of book attributes define a state of that book
+
+* Things which can be done with a book are methods
+
+
+---
+
 ## First class
 
 ```python
@@ -277,7 +290,7 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 * Object is an instance of a class:
     ```python
     >>> favorite_book = Book("Pride and Prejudice", "Jane Austen", "123")
-    >>> type(fav)
+    >>> type(favorite_book)
     <type 'instance'>
     >>> boring_book = Book("Washing machines of the 20th century", "Boring Guy", "456")
     ```
@@ -303,23 +316,6 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 ---
 
-## Methods
-
-* All functions defined inside a class are called methods and must have the argument `self` in the list of arguments
-        >>> def borrow(self, name, date): 
-    
-* `__init__` is a special method called **constructor** 
-    * Every time an object is created, Python calls the constructor of the class
-    * It is useful to set the values of instance attributes upon the creation of the object
-    
-* Methods are accessed using the dot notation
-```python
-    >>> favorite_book = Book("Pride and Prejudice", "Jane Austen", "123")
-    >>> favorite_book.borrow()
-```
-
----
-
 ## Attributes
       
 * Attributes (also called instance attributes) are variables inside a class and are also accessed using the dot notation
@@ -338,6 +334,24 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
     ...     evil = 0 # <-- class varible
     ...     def __init__(self, title, author, isbn): # <-- this is a method
     ```
+
+
+---
+
+## Methods
+
+* All functions defined inside a class are called methods and must have the argument `self` in the list of arguments
+        >>> def borrow(self, name, date): 
+    
+* `__init__` is a special method called **constructor** 
+    * Every time an object is created, Python calls the constructor of the class
+    * It is useful to set the values of instance attributes upon the creation of the object
+    
+* Methods are accessed using the dot notation
+```python
+    >>> favorite_book = Book("Pride and Prejudice", "Jane Austen", "123")
+    >>> favorite_book.borrow()
+```
 
 ---
 
@@ -429,7 +443,7 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 * Create **class** as a blueprint and **objects** that are concrete examples of that class (dots are hiding more complex code which is omitted for brevity)
 
 ```python
-class DataType():
+class DataType(object):
     ...
 
 class Integer(DataType):
