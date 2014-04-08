@@ -249,7 +249,7 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 >>> class Book(object): # <-- definition of a class
 ...     """This class describes the concept of a book.""" # <-- docstring
 ...     
-...     evil = 0 # <-- class varible
+...     evil = 0 # <-- class variable
 ...     
 ...     def __init__(self, title, author, isbn): # <-- this is a method
 ...         self.title = title # <-- this is an atribute
@@ -292,11 +292,12 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 * Python uses `self` to refer to the class members and distinguish them from local variables
 
 ```python
-...     def __init__(self, title, author, isbn): 
-...         self.title = title 
-...
-...     def borrow(self, name, date):
-...         self.name = name
+     def __init__(self, title, author, isbn): 
+         print author # <- local variable
+         self.title = title 
+
+     def borrow(self, name, date):
+         self.name = name
 
 ```
 
@@ -367,18 +368,18 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
     ...         self.author = author 
     ...         self.pages = pages
     ...                 
-    ...     def repairCosts(self):
+    ...     def repair_costs(self):
     ...         return self.pages * 2
     ... 
     >>> class SpecialBook(Book):
-    ...     def repairCosts(self):
+    ...     def repair_costs(self):
     ...         return self.pages * 5
     ... 
     >>> standard_book = Book("Adventures of Tom Sawyer", "Mark Twain", 125)
-    >>> standard_book.repairCosts()
+    >>> standard_book.repair_costs()
     250
     >>> special_book = SpecialBook("Encyclopedia Britannica", "Unknown", 125)
-    >>> special_book.repairCosts()
+    >>> special_book.repair_costs()
     625
     ```
 
@@ -386,9 +387,9 @@ from functions import add_floats, print_float, clear_float, add_ints, print_int,
 
 ### Advanced OOP: Inheritance [cont'd]
     
-* In the previous example, we inherited methods and attributes of the parent class when defining a new class `SpecialBook`
+* In the previous example, we inherited methods and attributes of the parent class in a new class `SpecialBook`
 
-* In addition, we replaced the `repairCosts` method of the parent class with our own. This is called [overriding](http://en.wikipedia.org/wiki/Method_overriding) 
+* In addition, we replaced the `repair_costs` method of the parent class with our own. This is called [overriding](http://en.wikipedia.org/wiki/Method_overriding) 
 
 ---
 
@@ -490,9 +491,8 @@ Printing a string: ""
     * The tutorial guides you through the installation process (Exercise 0) and continues with simple exercises (Exercise 1 - Exercise 4)
     
 * [OOP](https://github.com/ikajic/python-oop/): First steps in OOP
-    * Recommended for all who already know some Python
-    * There are several exercises of varying complexity, it starts with the simplest ones: creation of a class, inspection of class members and playing around with instances of that class
-    * There are a couple of mind-teasers for those of you who want to know more about objects
+    * Recommended for everyone else :)
+    * A guided tutorial, starts with more simple concepts such as creation of a class and objects, inspection of attributes and continues with more advanced stuff such as inheritance. 
 
 
 </script>            
